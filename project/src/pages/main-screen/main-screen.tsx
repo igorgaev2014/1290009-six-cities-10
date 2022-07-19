@@ -1,3 +1,4 @@
+import CitiesCardList from '../../components/cities-card-list/cities-card-list';
 import CitiesCard from '../../components/cities-card/cities-card';
 import Logo from '../../components/logo/logo';
 import { Offers } from '../../types/offers';
@@ -101,6 +102,7 @@ function MainScreen({placesCount, offers}: MainScreenProps): JSX.Element {
                 <CitiesCard />
                 <CitiesCard />
                 <CitiesCard />
+                <CitiesCardList offers={offers} />
               </div>
             </section>
             <div className="cities__right-section">
