@@ -23,8 +23,8 @@ function App({placesCount, offers}: AppScreenProps): JSX.Element {
         <Route
           path={AppRoute.Favorites}
           element={
-            <PrivateRoute authStatus={AuthStatus.NoAuth}>
-              <FavoritesScreen/>
+            <PrivateRoute authStatus={AuthStatus.Auth}>
+              <FavoritesScreen offers={offers} />
             </PrivateRoute>
           }
         />
