@@ -1,5 +1,4 @@
 import CitiesCardList from '../../components/cities-card-list/cities-card-list';
-import CitiesCard from '../../components/cities-card/cities-card';
 import Logo from '../../components/logo/logo';
 import { Offers } from '../../types/offers';
 
@@ -97,11 +96,6 @@ function MainScreen({placesCount, offers}: MainScreenProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <CitiesCard />
-                <CitiesCard />
-                <CitiesCard />
-                <CitiesCard />
-                <CitiesCard />
                 <CitiesCardList offers={offers} />
               </div>
             </section>
