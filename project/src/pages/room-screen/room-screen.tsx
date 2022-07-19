@@ -1,13 +1,14 @@
 import Logo from '../../components/logo/logo';
-import { Offers } from '../../types/offers';
-import { Link } from 'react-router-dom';
+import { Offer } from '../../types/offers';
+import { Link, useParams } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
 type RoomScreenProps = {
-  offers: Offers;
+  offers: Offer[];
 }
 
 function RoomScreen({offers}: RoomScreenProps): JSX.Element {
+  const { id } = useParams();
   return (
     <div className="page">
       <header className="header">
@@ -19,13 +20,11 @@ function RoomScreen({offers}: RoomScreenProps): JSX.Element {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <Link to={`${AppRoute.Favorites}`}>
-                    <a className="header__nav-link header__nav-link--profile" href="/">
-                      <div className="header__avatar-wrapper user__avatar-wrapper">
-                      </div>
-                      <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                      <span className="header__favorite-count">3</span>
-                    </a>
+                  <Link to={`${AppRoute.Favorites}`} className="header__nav-link header__nav-link--profile">
+                    <div className="header__avatar-wrapper user__avatar-wrapper">
+                    </div>
+                    <span className="header__user-name user__name">{id}Oliver.conner@gmail.com</span>
+                    <span className="header__favorite-count">3</span>
                   </Link>
                 </li>
                 <li className="header__nav-item">
@@ -70,7 +69,7 @@ function RoomScreen({offers}: RoomScreenProps): JSX.Element {
               </div>
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  Beautiful &amp; luxurious studio at great location
+
                 </h1>
                 <button className="property__bookmark-button button" type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">

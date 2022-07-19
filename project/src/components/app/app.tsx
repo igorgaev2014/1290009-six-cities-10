@@ -28,7 +28,7 @@ function App({placesCount, offers}: AppScreenProps): JSX.Element {
             </PrivateRoute>
           }
         />
-        <Route path={AppRoute.Room} element={<RoomScreen offers={offers} />}/>
+        <Route path={`${AppRoute.Room}/:id`} element={<RoomScreen offers={offers} />}/>
         <Route path="*" element={<NotFoundScreen/>}/>
       </Routes>
     </BrowserRouter>
