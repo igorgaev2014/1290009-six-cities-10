@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
 import { Offer } from '../../types/offers';
 
 type CitiesCardProps = {
@@ -10,9 +12,9 @@ function CitiesCard({offer, onMouseOver}: CitiesCardProps): JSX.Element {
   return (
     <article className="cities__card place-card" onMouseOver={onMouseOver}>
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="/">
+        <Link to={`${AppRoute.Room}/${offer.id}`}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place img" />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -34,7 +36,7 @@ function CitiesCard({offer, onMouseOver}: CitiesCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="/">{title}</a>
+          <Link to={`${AppRoute.Room}/${offer.id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
