@@ -1,11 +1,13 @@
 import CitiesCard from '../../components/cities-card/cities-card';
 import Logo from '../../components/logo/logo';
+import { Offers } from '../../types/offers';
 
 type MainScreenProps = {
   placesCount: number;
+  offers: Offers;
 }
 
-function MainScreen({placesCount}: MainScreenProps): JSX.Element {
+function MainScreen({placesCount, offers}: MainScreenProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">

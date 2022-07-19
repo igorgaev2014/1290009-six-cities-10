@@ -1,6 +1,11 @@
 import Logo from '../../components/logo/logo';
+import { Offers } from '../../types/offers';
 
-function RoomScreen(): JSX.Element {
+type RoomScreenProps = {
+  offers: Offers;
+}
+
+function RoomScreen({offers}: RoomScreenProps): JSX.Element {
   return (
     <div className="page">
       <header className="header">
