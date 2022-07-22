@@ -5,6 +5,7 @@ import { Link, useParams } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import ReviewsForm from '../../components/reviews-form/reviews-form';
 import ReviewsList from '../../components/reviews-list/reviews-list';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 type RoomScreenProps = {
   offers: Offer[];
@@ -14,6 +15,11 @@ type RoomScreenProps = {
 function RoomScreen({offers, reviews}: RoomScreenProps): JSX.Element {
   const { id } = useParams();
   const currentOffer = offers.filter((offer) => offer.id === Number(id));
+
+  if (!currentOffer[0]) {
+    return <NotFoundScreen />;
+  }
+
   const { title, price, rating, type, bedrooms, maxAdults, goods, host, description, images, isPremium } = currentOffer[0];
   const { name, isPro, avatarUrl } = host;
   const propertyItems = goods.map((good) => <li key={good.toString()} className="property__inside-item">{good}</li>);
