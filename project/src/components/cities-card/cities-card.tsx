@@ -8,7 +8,7 @@ type CitiesCardProps = {
 }
 
 function CitiesCard({offer, onMouseOver}: CitiesCardProps): JSX.Element {
-  const {previewImage, title, type, price} = offer;
+  const {previewImage, title, type, price, rating} = offer;
   return (
     <article className="cities__card place-card" onMouseOver={onMouseOver}>
       <div className="cities__image-wrapper place-card__image-wrapper">
@@ -31,7 +31,7 @@ function CitiesCard({offer, onMouseOver}: CitiesCardProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: '80%'}}></span>
+            <span style={{width: `${Math.floor(rating * 100 / 5)}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

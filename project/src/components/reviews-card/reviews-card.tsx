@@ -5,7 +5,7 @@ type ReviewCardProps = {
 }
 
 function ReviewCard({review}: ReviewCardProps): JSX.Element {
-  const { comment, user, date } = review;
+  const { comment, user, date, rating } = review;
   const { name, avatarUrl } = user;
   return (
     <li className="reviews__item">
@@ -20,7 +20,7 @@ function ReviewCard({review}: ReviewCardProps): JSX.Element {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{width: '80%'}}></span>
+            <span style={{width: `${Math.floor(rating * 100 / 5)}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
