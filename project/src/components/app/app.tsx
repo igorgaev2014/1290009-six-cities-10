@@ -8,13 +8,15 @@ import RoomScreen from '../../pages/room-screen/room-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
 import { Offers } from '../../types/offers';
+import { Reviews } from '../../types/reviews';
 
 type AppScreenProps = {
   placesCount: number;
   offers: Offers;
+  reviews: Reviews;
 }
 
-function App({placesCount, offers}: AppScreenProps): JSX.Element {
+function App({placesCount, offers, reviews}: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -28,7 +30,7 @@ function App({placesCount, offers}: AppScreenProps): JSX.Element {
             </PrivateRoute>
           }
         />
-        <Route path={`${AppRoute.Room}/:id`} element={<RoomScreen offers={offers} />}/>
+        <Route path={`${AppRoute.Room}/:id`} element={<RoomScreen offers={offers} reviews={reviews}/>}/>
         <Route path="*" element={<NotFoundScreen/>}/>
       </Routes>
     </BrowserRouter>
