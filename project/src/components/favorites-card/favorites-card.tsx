@@ -2,33 +2,31 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { Offer } from '../../types/offers';
 
-type CitiesCardProps = {
+type FavoritesCardProps = {
   offer: Offer;
-  onMouseOver: () => void;
 }
 
-function CitiesCard({offer, onMouseOver}: CitiesCardProps): JSX.Element {
-  const {previewImage, title, type, price, rating, isPremium, isFavorite} = offer;
+function FavoritesCard({offer}: FavoritesCardProps) {
+  const {type, images, title, price} = offer;
+
   return (
-    <article className="cities__card place-card" onMouseOver={onMouseOver}>
-      {isPremium &&
+    <article className="favorites__card place-card">
+      {offer.isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
         </div>}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className="favorites__image-wrapper place-card__image-wrapper">
         <Link to={`${AppRoute.Room}/${offer.id}`}>
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place img" />
+          <img className="place-card__image" src={images[0]} width="150" height="110" alt={title} />
         </Link>
       </div>
-      <div className="place-card__info">
+      <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button button
-            ${isFavorite ? 'place-card__bookmark-button--active button' : ''}`} type="button"
-          >
+          <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
@@ -37,7 +35,7 @@ function CitiesCard({offer, onMouseOver}: CitiesCardProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${Math.floor(rating * 100 / 5)}%`}}></span>
+            <span style={{width: '100%'}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
@@ -49,5 +47,4 @@ function CitiesCard({offer, onMouseOver}: CitiesCardProps): JSX.Element {
     </article>
   );
 }
-
-export default CitiesCard;
+export default FavoritesCard;
