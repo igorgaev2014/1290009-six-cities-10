@@ -14,8 +14,8 @@ type RoomScreenProps = {
 function RoomScreen({offers, reviews}: RoomScreenProps): JSX.Element {
   const { id } = useParams();
   const currentOffer = offers.filter((offer) => offer.id === Number(id));
-  const { title, price, rating, type, bedrooms, maxAdults, goods, host, description, images } = currentOffer[0];
-  const { name, isPro } = host;
+  const { title, price, rating, type, bedrooms, maxAdults, goods, host, description, images, isPremium } = currentOffer[0];
+  const { name, isPro, avatarUrl } = host;
   const propertyItems = goods.map((good) => <li key={good.toString()} className="property__inside-item">{good}</li>);
   const propertyImages = images.map((image) => (
     <div key={image.toString()} className="property__image-wrapper">
@@ -63,7 +63,7 @@ function RoomScreen({offers, reviews}: RoomScreenProps): JSX.Element {
           <div className="property__container container">
             <div className="property__wrapper">
               <div className="property__mark">
-                <span>Premium</span>
+                {isPremium && <span>Premium</span>}
               </div>
               <div className="property__name-wrapper">
                 <h1 className="property__name">
@@ -108,7 +108,7 @@ function RoomScreen({offers, reviews}: RoomScreenProps): JSX.Element {
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
+                    <img className="property__avatar user__avatar" src={avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
                     {name}
