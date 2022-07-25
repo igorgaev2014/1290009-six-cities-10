@@ -1,15 +1,26 @@
 import CitiesCardList from '../../components/cities-card-list/cities-card-list';
 import Logo from '../../components/logo/logo';
-import { Offers } from '../../types/offers';
+import { Offer } from '../../types/offers';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import Map from '../../components/map/map';
+import { useState } from 'react';
 
 type MainScreenProps = {
   placesCount: number;
-  offers: Offers;
+  offers: Offer[];
 }
 
-function MainScreen({placesCount, offers}: MainScreenProps): JSX.Element {
+function MainScreen(props: MainScreenProps): JSX.Element {
+  const {placesCount, offers} = props;
+
+  const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
+
+  const handleOfferHover = (hoveredOffer: Offer | null) => {
+    const currentOffer = offers.find((offer) => offer.id === hoveredOffer?.id);
+    setSelectedOffer(currentOffer);
+  };
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -98,11 +109,11 @@ function MainScreen({placesCount, offers}: MainScreenProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <CitiesCardList offers={offers} />
+                <CitiesCardList offers={offers} onOfferHover={handleOfferHover} />
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map offers={offers} selectedOffer={selectedOffer} />
             </div>
           </div>
         </div>

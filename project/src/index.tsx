@@ -13,11 +13,9 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <React.StrictMode>
-    <App
-      placesCount = {Setting.PLACES_COUNT}
-      offers = {offers}
-      reviews = {reviews}
-    />
-  </React.StrictMode>,
+  <App
+    placesCount = {Setting.PLACES_COUNT}
+    offers = {offers}
+    reviews = {reviews}
+  />
 );
