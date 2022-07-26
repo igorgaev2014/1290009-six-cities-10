@@ -6,6 +6,7 @@ import { AppRoute } from '../../const';
 import ReviewsForm from '../../components/reviews-form/reviews-form';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
+import Map from '../../components/map/map';
 
 type RoomScreenProps = {
   offers: Offer[];
@@ -137,6 +138,7 @@ function RoomScreen({offers, reviews}: RoomScreenProps): JSX.Element {
             </div>
           </div>
           <section className="property__map map">
+            <Map offers={offers} selectedOffer={currentOffer[0]}/>
           </section>
         </section>
         <div className="container">
