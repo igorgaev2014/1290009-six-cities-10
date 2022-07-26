@@ -7,7 +7,7 @@ import 'leaflet/dist/leaflet.css';
 
 type MapProps = {
   offers: Offer[];
-  selectedOffer: Offer | undefined;
+  selectedOffer?: Offer | undefined;
 };
 
 const defaultCustomIcon = new Icon({
@@ -50,7 +50,7 @@ function Map(props: MapProps): JSX.Element {
     }
   }, [map, offers, selectedOffer]);
 
-  return <section ref={mapRef} className="cities__map map"></section>;
+  return <div ref={mapRef} style={{height: '100%'}}></div>;
 }
 
 export default Map;
