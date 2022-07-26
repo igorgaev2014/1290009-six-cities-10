@@ -1,17 +1,16 @@
 import CitiesCard from '../../components/cities-card/cities-card';
-import { Offers } from '../../types/offers';
-import { useState } from 'react';
+import { Offer } from '../../types/offers';
 
 type CitiesCardListProps = {
-  offers: Offers;
+  offers: Offer[];
+  onOfferHover: (hoveredOffer: Offer | null) => void;
 }
 
-function CitiesCardList({offers}: CitiesCardListProps): JSX.Element {
-  const [, onActiveCardId] = useState<number>();
+function CitiesCardList({offers, onOfferHover}: CitiesCardListProps): JSX.Element {
   return (
     <>
       {offers.map((offer) =>
-        <CitiesCard key={offer.id} offer={offer} onMouseOver={() => onActiveCardId(offer.id)}/>)}
+        <CitiesCard key={offer.id} offer={offer} onOfferHover={onOfferHover} />)}
     </>
   );
 }

@@ -19,5 +19,5 @@ root.render(
       offers = {offers}
       reviews = {reviews}
     />
-  </React.StrictMode>,
+  </React.StrictMode>
 );
