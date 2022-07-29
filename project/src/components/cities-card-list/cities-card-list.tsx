@@ -3,7 +3,7 @@ import { Offer } from '../../types/offers';
 
 type CitiesCardListProps = {
   offers: Offer[];
-  onOfferHover: (hoveredOffer: Offer | null) => void;
+  onOfferHover?: (hoveredOffer: Offer | null) => void;
 }
 
 function CitiesCardList({offers, onOfferHover}: CitiesCardListProps): JSX.Element {
