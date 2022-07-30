@@ -5,20 +5,20 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import Map from '../../components/map/map';
 import { useState } from 'react';
+import {useAppSelector} from '../../hooks';
+// import {useAppDispatch} from '../../hooks';
+// import { changeCity } from '../../store/action';
 
-type MainScreenProps = {
-  placesCount: number;
-  offers: Offer[];
-}
-
-function MainScreen(props: MainScreenProps): JSX.Element {
-  const {placesCount, offers} = props;
+function MainScreen(): JSX.Element {
+  const offers = useAppSelector((state) => state.offers); // берем объекты из глобального стейта
 
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
+  // const dispatch = useAppDispatch();
 
   const handleOfferHover = (hoveredOffer: Offer | null) => {
     const currentOffer = offers.find((offer) => offer.id === hoveredOffer?.id);
     setSelectedOffer(currentOffer);
+    // dispatch(changeCity(currentOffer));
   };
 
   return (
@@ -92,7 +92,7 @@ function MainScreen(props: MainScreenProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{placesCount} places to stay in Amsterdam</b>
+              <b className="places__found"> places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by&nbsp;</span>
                 <span className="places__sorting-type" tabIndex={0}>
