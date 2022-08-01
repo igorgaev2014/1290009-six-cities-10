@@ -1,5 +1,5 @@
 import {useRef, useEffect} from 'react';
-import {Icon, Marker} from 'leaflet';
+import {Icon, Marker, LayerGroup} from 'leaflet';
 import useMap from '../../hooks/useMap';
 import {Offer} from '../../types/offers';
 import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const';
@@ -24,13 +24,15 @@ const currentCustomIcon = new Icon({
 
 function Map(props: MapProps): JSX.Element {
   const {offers, selectedOffer} = props;
-
   const mapRef = useRef(null);
   const city = offers[0].city;
   const map = useMap(mapRef, city);
 
   useEffect(() => {
     if (map) {
+      const placesLayer = new LayerGroup();
+      placesLayer.addTo(map);
+
       offers.forEach((offer) => {
         const marker = new Marker({
           lat: offer.location.latitude,
@@ -45,10 +47,22 @@ function Map(props: MapProps): JSX.Element {
               ? currentCustomIcon
               : defaultCustomIcon
           )
-          .addTo(map);
+          .addTo(placesLayer);
       });
+      return () => {
+        placesLayer.remove();
+      };
     }
   }, [map, offers, selectedOffer]);
+
+  useEffect(() => {
+    if (map) {
+      map.flyTo([city.location.latitude, city.location.longitude], city.location.zoom, {
+        animate: true,
+        duration: 0.5
+      });
+    }
+  }, [map, city]);
 
   return <div ref={mapRef} style={{height: '100%'}}></div>;
 }
