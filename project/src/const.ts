@@ -20,3 +20,7 @@ export const URL_MARKER_CURRENT =
 export const STAR_RATING = [
   'terribly', 'badly', 'not bad', 'good', 'perfect',
 ];
+
+export const CITY_NAMES = [
+  'Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg'
+];
