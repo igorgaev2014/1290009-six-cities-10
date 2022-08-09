@@ -1,34 +1,25 @@
-import { useAppSelector, useAppDispatch } from '../../hooks';
+import { useAppSelector } from '../../hooks';
 import { SortType } from '../../const';
-import { changeSort } from '../../store/action';
+import SortItem from '../sort-item/sort-item';
 
 type SortListProps = {
-  onCloseList: () => void;
+  onClick: () => void;
 }
 
-function SortList({onCloseList}: SortListProps): JSX.Element {
+function SortList({onClick}: SortListProps): JSX.Element {
   const {sort} = useAppSelector((state) => state);
-  const dispatch = useAppDispatch();
-
-  const onSortChangeHandler = (sortItem: string) => {
-    dispatch(changeSort({sort: sortItem}));
-    onCloseList();
-  };
 
   return (
     <ul className="places__options places__options--custom places__options--opened">
-      {
-        Object.values(SortType).map((sortItem) => (
-          <li
-            key={sortItem}
-            className={`places__option ${sortItem === sort ? 'places__option--active' : ''}`}
-            tabIndex={0}
-            onClick={() => onSortChangeHandler(sortItem)}
-          >
-            {sortItem}
-          </li>
-        ))
-      }
+      {Object.values(SortType).map((sortType) => (
+        <li
+          key={sortType}
+          className={`places__option ${sortType === sort ? 'places__option--active' : ''}`}
+          tabIndex={0}
+        >
+          <SortItem onClick={onClick} sortType={sortType} />
+        </li>
+      ))}
     </ul>
   );
 }

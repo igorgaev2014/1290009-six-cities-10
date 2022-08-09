@@ -4,7 +4,7 @@ import { Offer } from '../../types/offers';
 import { Link } from 'react-router-dom';
 import { AppRoute, CITY_NAMES, SortType } from '../../const';
 import Map from '../../components/map/map';
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import {useAppSelector} from '../../hooks';
 import CityButton from '../../components/city-button/city-button';
 import { changeCity } from '../../store/action';
@@ -14,14 +14,18 @@ import SortList from '../../components/sort-list/sort-list';
 function MainScreen(): JSX.Element {
   const stateCity = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
-  const filteredOffers = offers.filter((offer) => offer.city.name === stateCity);
+  const filteredOffers = useMemo(
+    () => offers.filter((offer) => offer.city.name === stateCity),
+    [offers, stateCity]
+  );
+
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
   const [showSortList, setShowSortList] = useState(false);
   const sort = useAppSelector((state) => state.sort);
   const dispatch = useAppDispatch();
 
-  const sortOffers = (sortType: string) => {
-    switch (sortType) {
+  const offersToRender = useMemo(() => {
+    switch (sort) {
       case SortType.Rated:
         return filteredOffers.sort((a, b) => b.rating - a.rating);
       case SortType.PriceHighToLow:
@@ -31,8 +35,7 @@ function MainScreen(): JSX.Element {
       default:
         return filteredOffers;
     }
-  };
-  sortOffers(sort);
+  }, [sort, filteredOffers]);
 
   const handleOfferHover = (hoveredOffer: Offer | null) => {
     const currentOffer = filteredOffers.find((offer) => offer.id === hoveredOffer?.id);
@@ -43,9 +46,13 @@ function MainScreen(): JSX.Element {
     dispatch(changeCity({city}));
   };
 
-  const onSortListHandler = () => {
+  const toggleShowSort = useCallback(() => {
     setShowSortList(!showSortList);
-  };
+  }, [showSortList]);
+
+  const hideSort = useCallback(() => {
+    setShowSortList(false);
+  }, []);
 
   return (
     <div className="page page--gray page--main">
@@ -94,23 +101,28 @@ function MainScreen(): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{filteredOffers.length} places to stay in {stateCity}</b>
+              <b className="places__found">{offersToRender.length} places to stay in {stateCity}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by&nbsp;</span>
-                <span className="places__sorting-type" tabIndex={0} onClick={onSortListHandler}>&nbsp;{sort}
+                <span
+                  className="places__sorting-type"
+                  tabIndex={0}
+                  onClick={toggleShowSort}
+                >
+                  &nbsp;{sort}
                   <svg className="places__sorting-arrow" width="7" height="4">
                     <use xlinkHref="#icon-arrow-select"></use>
                   </svg>
                 </span>
-                {showSortList ? <SortList onCloseList={onSortListHandler} /> : null}
+                {showSortList ? <SortList onClick={hideSort} /> : null}
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <CitiesCardList offers={filteredOffers} onOfferHover={handleOfferHover} />
+                <CitiesCardList offers={offersToRender} onOfferHover={handleOfferHover} />
               </div>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map offers={filteredOffers} selectedOffer={selectedOffer} />
+                <Map offers={offersToRender} selectedOffer={selectedOffer} />
               </section>;
             </div>
           </div>
