@@ -11,6 +11,13 @@ export enum AuthStatus {
   Unknown = 'UNKNOWN',
 }
 
+export enum SortType {
+  Popular = 'Popular',
+  PriceLowToHigh = 'Price: low to high',
+  PriceHighToLow = 'Price: high to low',
+  Rated = 'Top rated first',
+}
+
 export const URL_MARKER_DEFAULT =
   'img/pin.svg';
 
