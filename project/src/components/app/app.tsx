@@ -7,16 +7,24 @@ import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import RoomScreen from '../../pages/room-screen/room-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
-import { Offers } from '../../types/offers';
 import { Reviews } from '../../types/reviews';
+import { useAppSelector } from '../../hooks';
+import LoadingLayout from '../loading-layout/loading-layout';
 
 type AppScreenProps = {
   placesCount: number;
-  offers: Offers;
   reviews: Reviews;
 }
 
-function App({placesCount, offers, reviews}: AppScreenProps): JSX.Element {
+function App({placesCount, reviews}: AppScreenProps): JSX.Element {
+  const isDataLoading = useAppSelector((state) => state.isLoading);
+
+  if (isDataLoading) {
+    return (
+      <LoadingLayout />
+    );
+  }
+
   return (
     <BrowserRouter>
       <Routes>
@@ -26,11 +34,11 @@ function App({placesCount, offers, reviews}: AppScreenProps): JSX.Element {
           path={AppRoute.Favorites}
           element={
             <PrivateRoute authStatus={AuthStatus.Auth}>
-              <FavoritesScreen offers={offers} />
+              <FavoritesScreen />
             </PrivateRoute>
           }
         />
-        <Route path={`${AppRoute.Room}/:id`} element={<RoomScreen offers={offers} reviews={reviews}/>}/>
+        <Route path={`${AppRoute.Room}/:id`} element={<RoomScreen reviews={reviews}/>}/>
         <Route path="*" element={<NotFoundScreen/>}/>
       </Routes>
     </BrowserRouter>
