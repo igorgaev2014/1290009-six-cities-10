@@ -1,13 +1,9 @@
 import Logo from '../../components/logo/logo';
-import { Offers } from '../../types/offers';
-// import FavoritesCard from '../../components/favorites-card/favorites-card';
 import FavoritesCardList from '../../components/favorites-card-list/favorites-card-list';
+import {useAppSelector} from '../../hooks';
 
-type FavoritesScreenProps = {
-  offers: Offers;
-}
-
-function FavoritesScreen({offers}: FavoritesScreenProps): JSX.Element {
+function FavoritesScreen(): JSX.Element {
+  const offers = useAppSelector((state) => state.offers);
   return (
     <div className="page">
       <header className="header">

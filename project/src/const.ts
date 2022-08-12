@@ -31,3 +31,7 @@ export const STAR_RATING = [
 export const CITY_NAMES = [
   'Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg'
 ];
+
+export enum APIRoute {
+  Offers = '/hotels',
+}

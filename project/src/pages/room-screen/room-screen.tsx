@@ -1,5 +1,4 @@
 import Logo from '../../components/logo/logo';
-import { Offer } from '../../types/offers';
 import { Reviews } from '../../types/reviews';
 import { Link, useParams } from 'react-router-dom';
 import { AppRoute } from '../../const';
@@ -8,14 +7,15 @@ import ReviewsList from '../../components/reviews-list/reviews-list';
 import CitiesCardList from '../../components/cities-card-list/cities-card-list';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import Map from '../../components/map/map';
+import {useAppSelector} from '../../hooks';
 
 type RoomScreenProps = {
-  offers: Offer[];
   reviews: Reviews;
 }
 
-function RoomScreen({offers, reviews}: RoomScreenProps): JSX.Element {
+function RoomScreen({reviews}: RoomScreenProps): JSX.Element {
   const { id } = useParams();
+  const offers = useAppSelector((state) => state.offers);
   const currentOffer = offers.filter((offer) => offer.id === Number(id));
 
   if (!currentOffer[0]) {
