@@ -1,8 +1,7 @@
 import CitiesCardList from '../../components/cities-card-list/cities-card-list';
 import Logo from '../../components/logo/logo';
 import { Offer } from '../../types/offers';
-import { Link } from 'react-router-dom';
-import { AppRoute, CITY_NAMES, SortType, AuthStatus } from '../../const';
+import { CITY_NAMES, SortType } from '../../const';
 import Map from '../../components/map/map';
 import { useCallback, useMemo, useState } from 'react';
 import {useAppSelector} from '../../hooks';
@@ -10,9 +9,9 @@ import CityButton from '../../components/city-button/city-button';
 import { changeCity } from '../../store/action';
 import {useAppDispatch} from '../../hooks';
 import SortList from '../../components/sort-list/sort-list';
+import Navigation from '../../components/navigation/navigation';
 
 function MainScreen(): JSX.Element {
-  const authStatus = useAppSelector((state) => state.authStatus);
   const stateCity = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
   const filteredOffers = useMemo(
@@ -63,34 +62,7 @@ function MainScreen(): JSX.Element {
             <div className="header__left">
               <Logo />
             </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                {authStatus === AuthStatus.Auth &&
-                <>
-                  <li className="header__nav-item user">
-                    <Link to={`${AppRoute.Favorites}`} className="header__nav-link header__nav-link--profile">
-                      <div className="header__avatar-wrapper user__avatar-wrapper">
-                      </div>
-                      <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                      <span className="header__favorite-count">3</span>
-                    </Link>
-                  </li>
-                  <li className="header__nav-item">
-                    <a className="header__nav-link" href="/">
-                      <span className="header__signout">Sign out</span>
-                    </a>
-                  </li>
-                </>}
-                {authStatus === AuthStatus.NoAuth &&
-                  <li className="header__nav-item user">
-                    <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Login}>
-                      <div className="header__avatar-wrapper user__avatar-wrapper">
-                      </div>
-                      <span className="header__login">Sign in</span>
-                    </Link>
-                  </li>}
-              </ul>
-            </nav>
+            <Navigation />
           </div>
         </div>
       </header>

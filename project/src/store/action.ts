@@ -7,4 +7,4 @@ export const fillOffers = createAction<{cityOffers: Offer[]}>('fillOffers');
 export const changeSort = createAction<{sort: string}>('changeSort');
 export const loadOffers = createAction<Offers>('loadOffers');
 export const setDataLoadStatus = createAction<boolean>('setDataLoadStatus');
-export const requireAuth = createAction<AuthStatus>('authStatus');
+export const setAuthStatus = createAction<AuthStatus>('setAuthStatus');
