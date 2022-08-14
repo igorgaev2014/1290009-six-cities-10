@@ -8,7 +8,8 @@ function Navigation(): JSX.Element {
   const authStatus = useAppSelector((state) => state.authStatus);
   const dispatch = useAppDispatch();
 
-  const onLogoutClick = () => {
+  const onLogoutClick = (evt: React.MouseEvent<HTMLElement>) => {
+    evt.preventDefault();
     dispatch(logoutAction());
   };
 

@@ -6,8 +6,8 @@ import { store } from './store';
 import { reviews } from './mocks/reviews';
 import { fetchOfferAction, checkAuthAction } from './store/api-actions';
 
-store.dispatch(fetchOfferAction());
 store.dispatch(checkAuthAction());
+store.dispatch(fetchOfferAction());
 
 const Setting = {
   PLACES_COUNT: 312,

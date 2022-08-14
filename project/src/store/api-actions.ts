@@ -2,7 +2,7 @@ import { Offers } from './../types/offers';
 import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state.js';
-import {loadOffers, setDataLoadStatus, setAuthStatus} from './action';
+import {loadOffers, setDataLoadedStatus, setAuthStatus} from './action';
 import {APIRoute, AuthStatus} from '../const';
 import { dropToken, saveToken } from '../services/token';
 import {AuthData} from '../types/auth-data';
@@ -17,7 +17,7 @@ export const fetchOfferAction = createAsyncThunk<void, undefined, {
   async (_arg, {dispatch, extra: api}) => {
     const {data} = await api.get<Offers>(APIRoute.Offers);
     dispatch(loadOffers(data));
-    dispatch(setDataLoadStatus(false));
+    dispatch(setDataLoadedStatus(false));
   },
 );
 
@@ -56,7 +56,7 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   extra: AxiosInstance
 }>(
   'user/logout',
-  async (_args, {dispatch, extra: api}) => {
+  async (_arg, {dispatch, extra: api}) => {
     await api.delete(APIRoute.Logout);
     dropToken();
     dispatch(setAuthStatus(AuthStatus.NoAuth));
