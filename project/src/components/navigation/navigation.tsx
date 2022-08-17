@@ -3,9 +3,11 @@ import { useAppSelector } from '../../hooks';
 import { AuthStatus, AppRoute } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
+// import { getUserData } from '../../services/userData';
 
 function Navigation(): JSX.Element {
   const authStatus = useAppSelector((state) => state.authStatus);
+  const userInfo = useAppSelector((state) => state.userInfo);
   const dispatch = useAppDispatch();
 
   const onLogoutClick = (evt: React.MouseEvent<HTMLElement>) => {
@@ -13,7 +15,7 @@ function Navigation(): JSX.Element {
     dispatch(logoutAction());
   };
 
-  const userEmail = useAppSelector((state) => state.userEmail);
+  // const userEmail = getUserData();
 
   return (
     <nav className="header__nav">
@@ -24,7 +26,7 @@ function Navigation(): JSX.Element {
               <Link to={AppRoute.Favorites} className="header__nav-link header__nav-link--profile">
                 <div className="header__avatar-wrapper user__avatar-wrapper">
                 </div>
-                <span className="header__user-name user__name">{userEmail}</span>
+                <span className="header__user-name user__name">{userInfo}</span>
                 <span className="header__favorite-count">3</span>
               </Link>
             </li>

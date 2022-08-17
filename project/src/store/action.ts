@@ -9,4 +9,4 @@ export const loadOffers = createAction<Offers>('loadOffers');
 export const setDataLoadedStatus = createAction<boolean>('setDataLoadedStatus');
 export const setAuthStatus = createAction<AuthStatus>('setAuthStatus');
 export const setError = createAction<string | null>('setError');
-export const getUserEmail = createAction<string | null>('getUserEmail');
+export const setUserInfo = createAction<string | null>('setUserInfo');
