@@ -1,23 +1,25 @@
 import { AuthStatus } from './../const';
 import { Offers } from './../types/offers';
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, fillOffers, changeSort, loadOffers, setDataLoadedStatus, setAuthStatus} from './action';
+import { changeCity, fillOffers, changeSort, loadOffers, setDataLoadedStatus, setAuthStatus, setError} from './action';
 
 
 type InitialState = {
   city: string;
   offers: Offers;
   sort: string;
-  isLoaded: boolean;
+  isLoadingOffer: boolean;
   authStatus: AuthStatus;
+  error: string | null;
 }
 
 const initialState: InitialState = {
   city: 'Paris',
   offers: [],
   sort: 'Popular',
-  isLoaded: true,
+  isLoadingOffer: true,
   authStatus: AuthStatus.Unknown,
+  error: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -38,10 +40,13 @@ const reducer = createReducer(initialState, (builder) => {
       state.offers = action.payload;
     })
     .addCase(setDataLoadedStatus, (state, action) => {
-      state.isLoaded = action.payload;
+      state.isLoadingOffer = action.payload;
     })
     .addCase(setAuthStatus, (state, action) => {
       state.authStatus = action.payload;
+    })
+    .addCase(setError, (state, action) => {
+      state.error = action.payload;
     });
 });
 

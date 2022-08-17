@@ -17,7 +17,7 @@ type AppScreenProps = {
 }
 
 function App({placesCount, reviews}: AppScreenProps): JSX.Element {
-  const isDataLoaded = useAppSelector((state) => state.isLoaded);
+  const isDataLoaded = useAppSelector((state) => state.isLoadingOffer);
 
   if (isDataLoaded) {
     return (

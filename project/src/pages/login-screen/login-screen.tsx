@@ -1,5 +1,5 @@
 import Logo from '../../components/logo/logo';
-import { FormEvent, useLayoutEffect, useRef } from 'react';
+import { FormEvent, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AppRoute, AuthStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -24,7 +24,7 @@ function LoginScreen(): JSX.Element {
     }
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (authStatus === AuthStatus.Auth) {
       navigate(AppRoute.Main);
     }

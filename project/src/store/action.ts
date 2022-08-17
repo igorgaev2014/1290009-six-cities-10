@@ -8,3 +8,4 @@ export const changeSort = createAction<{sort: string}>('changeSort');
 export const loadOffers = createAction<Offers>('loadOffers');
 export const setDataLoadedStatus = createAction<boolean>('setDataLoadedStatus');
 export const setAuthStatus = createAction<AuthStatus>('setAuthStatus');
+export const setError = createAction<string | null>('setError');
