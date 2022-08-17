@@ -1,7 +1,7 @@
 import { AuthStatus } from './../const';
 import { Offers } from './../types/offers';
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, fillOffers, changeSort, loadOffers, setDataLoadedStatus, setAuthStatus, setError} from './action';
+import { changeCity, fillOffers, changeSort, loadOffers, setDataLoadedStatus, setAuthStatus, setError, getUserEmail } from './action';
 
 
 type InitialState = {
@@ -11,6 +11,7 @@ type InitialState = {
   isLoadingOffer: boolean;
   authStatus: AuthStatus;
   error: string | null;
+  userEmail: string | null;
 }
 
 const initialState: InitialState = {
@@ -20,6 +21,7 @@ const initialState: InitialState = {
   isLoadingOffer: true,
   authStatus: AuthStatus.Unknown,
   error: null,
+  userEmail: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -47,6 +49,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setError, (state, action) => {
       state.error = action.payload;
+    })
+    .addCase(getUserEmail, (state, action) => {
+      state.userEmail = action.payload;
     });
 });
 

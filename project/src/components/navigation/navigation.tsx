@@ -13,6 +13,8 @@ function Navigation(): JSX.Element {
     dispatch(logoutAction());
   };
 
+  const userEmail = useAppSelector((state) => state.userEmail);
+
   return (
     <nav className="header__nav">
       <ul className="header__nav-list">
@@ -22,7 +24,7 @@ function Navigation(): JSX.Element {
               <Link to={AppRoute.Favorites} className="header__nav-link header__nav-link--profile">
                 <div className="header__avatar-wrapper user__avatar-wrapper">
                 </div>
-                <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                <span className="header__user-name user__name">{userEmail}</span>
                 <span className="header__favorite-count">3</span>
               </Link>
             </li>
