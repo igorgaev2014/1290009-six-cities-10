@@ -3,19 +3,16 @@ import { useAppSelector } from '../../hooks';
 import { AuthStatus, AppRoute } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
-// import { getUserData } from '../../services/userData';
 
 function Navigation(): JSX.Element {
-  const authStatus = useAppSelector((state) => state.authStatus);
-  const userInfo = useAppSelector((state) => state.userInfo);
+  const {authStatus} = useAppSelector((state) => state);
+  const {userInfo} = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
 
   const onLogoutClick = (evt: React.MouseEvent<HTMLElement>) => {
     evt.preventDefault();
     dispatch(logoutAction());
   };
-
-  // const userEmail = getUserData();
 
   return (
     <nav className="header__nav">

@@ -33,7 +33,7 @@ export const createAPI = (): AxiosInstance => {
   api.interceptors.response.use(
     (response) => response,
     (error: AxiosError) => {
-      if (error.response && shouldDisplayError(error.response)) {
+      if (error.response && shouldDisplayError(error.response) && error.response.status !== StatusCodes.UNAUTHORIZED) {
         processErrorHandle(error.response.data.error);
       }
 
