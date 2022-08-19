@@ -1,5 +1,5 @@
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
-import { AppRoute, AuthStatus } from '../../const';
+import { AppRoute } from '../../const';
 
 import MainScreen from '../../pages/main-screen/main-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
@@ -17,9 +17,9 @@ type AppScreenProps = {
 }
 
 function App({placesCount, reviews}: AppScreenProps): JSX.Element {
-  const isDataLoading = useAppSelector((state) => state.isLoading);
+  const isOffersDataLoading = useAppSelector((state) => state.isLoadingOffer);
 
-  if (isDataLoading) {
+  if (isOffersDataLoading) {
     return (
       <LoadingLayout />
     );
@@ -33,7 +33,7 @@ function App({placesCount, reviews}: AppScreenProps): JSX.Element {
         <Route
           path={AppRoute.Favorites}
           element={
-            <PrivateRoute authStatus={AuthStatus.Auth}>
+            <PrivateRoute>
               <FavoritesScreen />
             </PrivateRoute>
           }
