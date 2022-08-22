@@ -1,8 +1,15 @@
 import { ChangeEvent, useState, FormEvent, useCallback } from 'react';
 import { STAR_RATING } from '../../const';
 import Stars from '../stars/stars';
+import {useAppSelector, useAppDispatch} from '../../hooks';
+import { useParams } from 'react-router-dom';
+import { addReviewAction } from '../../store/api-actions';
 
 function ReviewsForm(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const {reviewPosted} = useAppSelector((state) => state);
+  const params = useParams();
+  const paramsId = Number(params.id);
   const [formData, setFormData] = useState({rating: '', review: ''});
 
   const memoChangeHandler = useCallback((evt: ChangeEvent<HTMLInputElement>) => {
@@ -17,6 +24,12 @@ function ReviewsForm(): JSX.Element {
 
   function onSubmitHandler(evt: FormEvent) {
     evt.preventDefault();
+
+    dispatch(addReviewAction({
+      comment: formData.review,
+      rating: Number(formData.rating),
+      id: paramsId,
+    }));
   }
 
   return (
@@ -33,12 +46,14 @@ function ReviewsForm(): JSX.Element {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={onTextAreaChange}
+        value={formData.review}
+        disabled={reviewPosted}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={reviewPosted}>Submit</button>
       </div>
     </form>
   );

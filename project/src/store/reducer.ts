@@ -2,7 +2,7 @@ import { Reviews } from './../types/reviews';
 import { AuthStatus } from './../const';
 import { Offer, Offers } from './../types/offers';
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, fillOffers, changeSort, loadOffers, setOffer, setDataLoadingStatus, setAuthStatus, setError, setUserInfo, setOffersNearby, setOfferReviews } from './action';
+import { changeCity, fillOffers, changeSort, loadOffers, setOffer, setDataLoadingStatus, setAuthStatus, setError, setUserInfo, setOffersNearby, setOfferReviews, setPostReviewStatus } from './action';
 
 
 type InitialState = {
@@ -16,6 +16,7 @@ type InitialState = {
   userInfo: string | null;
   offersNearby: Offers | [];
   reviews: Reviews | [];
+  reviewPosted: boolean;
 }
 
 const initialState: InitialState = {
@@ -29,6 +30,7 @@ const initialState: InitialState = {
   userInfo: null,
   offersNearby: [],
   reviews: [],
+  reviewPosted: false,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -68,6 +70,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setOfferReviews, (state, action) => {
       state.reviews = action.payload;
+    })
+    .addCase(setPostReviewStatus, (state, action) => {
+      state.reviewPosted = action.payload;
     });
 });
 

@@ -16,3 +16,4 @@ export const setUserInfo = createAction<string | null>('setUserInfo');
 export const redirectToRoute = createAction<AppRoute>('redirectToRoute');
 export const setOffersNearby = createAction<Offers>('setOffersNearby');
 export const setOfferReviews = createAction<Reviews>('setOfferReviews');
+export const setPostReviewStatus = createAction<boolean>('setPostReviewStatus');
