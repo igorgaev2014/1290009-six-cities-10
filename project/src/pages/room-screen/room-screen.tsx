@@ -11,12 +11,14 @@ import {useAppSelector, useAppDispatch} from '../../hooks';
 import Navigation from '../../components/navigation/navigation';
 import { setOfferReviewsAction, setOffersNearbyAction } from '../../store/api-actions';
 import { setOfferAction } from '../../store/api-actions';
+import { AuthStatus } from '../../const';
 
 function RoomScreen(): JSX.Element {
   const params = useParams();
   const id = Number(params.id);
 
   const {offers, offersNearby} = useAppSelector((state) => state);
+  const {authStatus} = useAppSelector((state) => state);
   const offer = offers[id];
   const dispatch = useAppDispatch();
 
@@ -127,7 +129,7 @@ function RoomScreen(): JSX.Element {
               </div>
               <section className="property__reviews reviews">
                 <ReviewsList />
-                <ReviewsForm />
+                {authStatus === AuthStatus.Auth && <ReviewsForm />}
               </section>
             </div>
           </div>
