@@ -30,6 +30,8 @@ function ReviewsForm(): JSX.Element {
       rating: Number(formData.rating),
       id: paramsId,
     }));
+
+    setFormData({rating: '', review: ''});
   }
 
   return (
