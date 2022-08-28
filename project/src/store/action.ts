@@ -8,7 +8,7 @@ export const changeCity = createAction<{city: City['name']}>('changeCity');
 export const fillOffers = createAction<{cityOffers: Offer[]}>('fillOffers');
 export const changeSort = createAction<{sort: string}>('changeSort');
 export const loadOffers = createAction<Offers>('loadOffers');
-export const setOffer = createAction('setOffer', (value) => ({payload: value}));
+export const setOffer = createAction<Offer>('setOffer');
 export const setDataLoadingStatus = createAction<boolean>('setDataLoadingStatus');
 export const setAuthStatus = createAction<AuthStatus>('setAuthStatus');
 export const setError = createAction<string | null>('setError');
