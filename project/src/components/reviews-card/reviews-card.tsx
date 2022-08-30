@@ -1,4 +1,5 @@
 import { Review } from '../../types/reviews';
+import {MONTHS} from '../../const';
 
 type ReviewCardProps = {
   review: Review;
@@ -7,6 +8,12 @@ type ReviewCardProps = {
 function ReviewCard({review}: ReviewCardProps): JSX.Element {
   const { comment, user, date, rating } = review;
   const { name, avatarUrl } = user;
+  const formatDate = (dateString: string): string => {
+    const dateObject = new Date(dateString);
+
+    return `${MONTHS[dateObject.getMonth()]} ${dateObject.getFullYear()}`;
+  };
+
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
@@ -25,7 +32,7 @@ function ReviewCard({review}: ReviewCardProps): JSX.Element {
           </div>
         </div>
         <p className="reviews__text">{comment}</p>
-        <time className="reviews__time" dateTime={date}>{date}</time>
+        <time className="reviews__time" dateTime={date.slice(0, 10)}>{formatDate(date)}</time>
       </div>
     </li>
   );

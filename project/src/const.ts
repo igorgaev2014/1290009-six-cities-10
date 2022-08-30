@@ -41,3 +41,7 @@ export enum APIRoute {
 }
 
 export const TIMEOUT_SHOW_ERROR = 2000;
+
+export const MONTHS = [
+  'January', 'February', 'March', 'April', 'May', 'June','Jule', 'August', 'September', 'October', 'November', 'December',
+];
