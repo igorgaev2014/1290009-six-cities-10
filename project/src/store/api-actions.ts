@@ -4,8 +4,8 @@ import { Offer, Offers } from './../types/offers';
 import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state.js';
-import { loadOffers, setOffer, setDataLoadingStatus, setAuthStatus, setError, setUserInfo, setOffersNearby, setOfferReviews, setPostReviewStatus } from './action';
-import {APIRoute, AuthStatus, TIMEOUT_SHOW_ERROR} from '../const';
+import { loadOffers, setOffer, setOffersLoadingStatus, setAuthStatus, setError, setUserInfo, setOffersNearby, setOfferReviews, setPostReviewStatus, setOfferLoadingStatus, redirectToRoute } from './action';
+import {APIRoute, AppRoute, AuthStatus, TIMEOUT_SHOW_ERROR} from '../const';
 import { dropToken, saveToken } from '../services/token';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
@@ -29,16 +29,12 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
 }>(
   'data/fetchOffers',
   async (_arg, {dispatch, extra: api}) => {
-    dispatch(setDataLoadingStatus(true));
+    dispatch(setOffersLoadingStatus(true));
 
     const response = await api.get<Offers>(APIRoute.Offers);
-    if (response) {
-      const {data} = response;
-      dispatch(loadOffers(data));
-      dispatch(setDataLoadingStatus(false));
-    } else {
-      dispatch(setDataLoadingStatus(true));
-    }
+    const {data} = response;
+    dispatch(loadOffers(data));
+    dispatch(setOffersLoadingStatus(false));
   },
 );
 
@@ -95,8 +91,14 @@ export const setOfferAction = createAsyncThunk<void, number, {
 }>(
   'data/setOffer',
   async (id, { dispatch, extra: api }) => {
-    const { data } = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
-    dispatch(setOffer(data));
+    try {
+      const { data } = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
+      dispatch(setOfferLoadingStatus(true));
+      dispatch(setOffer(data));
+      dispatch(setOfferLoadingStatus(false));
+    } catch {
+      dispatch(redirectToRoute(AppRoute.Error404));
+    }
   },
 );
 

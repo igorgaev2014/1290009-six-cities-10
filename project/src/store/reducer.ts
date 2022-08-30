@@ -2,7 +2,7 @@ import { Reviews } from './../types/reviews';
 import { AuthStatus } from './../const';
 import { Offer, Offers } from './../types/offers';
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, fillOffers, changeSort, loadOffers, setOffer, setDataLoadingStatus, setAuthStatus, setError, setUserInfo, setOffersNearby, setOfferReviews, setPostReviewStatus } from './action';
+import { changeCity, fillOffers, changeSort, loadOffers, setOffer, setOffersLoadingStatus, setAuthStatus, setError, setUserInfo, setOffersNearby, setOfferReviews, setPostReviewStatus, setOfferLoadingStatus } from './action';
 
 
 type InitialState = {
@@ -10,13 +10,14 @@ type InitialState = {
   offer: Offer | null;
   offers: Offers;
   sort: string;
-  isLoadingOffer: boolean;
+  isOffersLoading: boolean;
   authStatus: AuthStatus;
   error: string | null;
   userInfo: string | null;
   offersNearby: Offers | [];
   reviews: Reviews | [];
   reviewPosted: boolean;
+  isOfferLoading: boolean;
 }
 
 const initialState: InitialState = {
@@ -24,13 +25,14 @@ const initialState: InitialState = {
   offer: null,
   offers: [],
   sort: 'Popular',
-  isLoadingOffer: true,
+  isOffersLoading: true,
   authStatus: AuthStatus.Unknown,
   error: null,
   userInfo: null,
   offersNearby: [],
   reviews: [],
   reviewPosted: false,
+  isOfferLoading: true,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -56,9 +58,6 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(setOffersNearby, (state, action) => {
       state.offersNearby = action.payload;
     })
-    .addCase(setDataLoadingStatus, (state, action) => {
-      state.isLoadingOffer = action.payload;
-    })
     .addCase(setAuthStatus, (state, action) => {
       state.authStatus = action.payload;
     })
@@ -73,6 +72,12 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setPostReviewStatus, (state, action) => {
       state.reviewPosted = action.payload;
+    })
+    .addCase(setOffersLoadingStatus, (state, action) => {
+      state.isOffersLoading = action.payload;
+    })
+    .addCase(setOfferLoadingStatus, (state, action) => {
+      state.isOfferLoading = action.payload;
     });
 });
 

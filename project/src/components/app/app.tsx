@@ -13,7 +13,7 @@ import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 
 function App(): JSX.Element {
-  const isOffersDataLoading = useAppSelector((state) => state.isLoadingOffer);
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersLoading);
 
   if (isOffersDataLoading) {
     return (

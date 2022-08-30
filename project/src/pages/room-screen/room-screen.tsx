@@ -12,25 +12,27 @@ import Navigation from '../../components/navigation/navigation';
 import { setOfferReviewsAction, setOffersNearbyAction } from '../../store/api-actions';
 import { setOfferAction } from '../../store/api-actions';
 import { AuthStatus } from '../../const';
+import LoadingLayout from '../../components/loading-layout/loading-layout';
 
 function RoomScreen(): JSX.Element {
   const params = useParams();
   const id = Number(params.id);
-
-  const {offers, offersNearby} = useAppSelector((state) => state);
-  const {authStatus} = useAppSelector((state) => state);
-  const offer = offers[id];
+  const {offers, offersNearby, offer, isOfferLoading, authStatus} = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (id) {
-      dispatch(setOfferAction(id));
-      dispatch(setOffersNearbyAction(id));
-      dispatch(setOfferReviewsAction(id));
-    }
-  }, [dispatch, id]);
+    dispatch(setOfferAction(id));
+    dispatch(setOffersNearbyAction(id));
+    dispatch(setOfferReviewsAction(id));
+  }, [id, dispatch]);
 
-  if (!id || !offers[id]) {
+  if (isOfferLoading) {
+    return (
+      <LoadingLayout />
+    );
+  }
+
+  if (!id) {
     return <NotFoundScreen />;
   }
 
