@@ -1,30 +1,42 @@
 import Logo from '../../components/logo/logo';
-import { Reviews } from '../../types/reviews';
+import { Offer } from '../../types/offers';
 import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 import ReviewsForm from '../../components/reviews-form/reviews-form';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import CitiesCardList from '../../components/cities-card-list/cities-card-list';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import Map from '../../components/map/map';
-import {useAppSelector} from '../../hooks';
+import {useAppSelector, useAppDispatch} from '../../hooks';
 import Navigation from '../../components/navigation/navigation';
+import { setOfferReviewsAction, setOffersNearbyAction } from '../../store/api-actions';
+import { setOfferAction } from '../../store/api-actions';
+import { AuthStatus } from '../../const';
+import LoadingLayout from '../../components/loading-layout/loading-layout';
 
-type RoomScreenProps = {
-  reviews: Reviews;
-}
+function RoomScreen(): JSX.Element {
+  const params = useParams();
+  const id = Number(params.id);
+  const {offers, offersNearby, offer, isOfferLoading, authStatus} = useAppSelector((state) => state);
+  const dispatch = useAppDispatch();
 
-function RoomScreen({reviews}: RoomScreenProps): JSX.Element {
-  const { id } = useParams();
-  const offers = useAppSelector((state) => state.offers);
-  const currentOffer = offers.filter((offer) => offer.id === Number(id));
+  useEffect(() => {
+    dispatch(setOfferAction(id));
+    dispatch(setOffersNearbyAction(id));
+    dispatch(setOfferReviewsAction(id));
+  }, [id, dispatch]);
 
-  if (!currentOffer[0]) {
+  if (isOfferLoading) {
+    return (
+      <LoadingLayout />
+    );
+  }
+
+  if (!id) {
     return <NotFoundScreen />;
   }
 
-  const nearOffers = offers.filter((offer) => offer.id !== Number(id));
-
-  const { title, price, rating, type, bedrooms, maxAdults, goods, host, description, images, isPremium } = currentOffer[0];
+  const { title, price, rating, type, bedrooms, maxAdults, goods, host, description, images, isPremium } = offer as Offer;
   const { name, isPro, avatarUrl } = host;
   const propertyItems = goods.map((good) => <li key={good.toString()} className="property__inside-item">{good}</li>);
   const propertyImages = images.map((image) => (
@@ -118,21 +130,20 @@ function RoomScreen({reviews}: RoomScreenProps): JSX.Element {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                <ReviewsList reviews={reviews} />
-                <ReviewsForm />
+                <ReviewsList />
+                {authStatus === AuthStatus.Auth && <ReviewsForm />}
               </section>
             </div>
           </div>
           <section className="property__map map">
-            <Map offers={offers} selectedOffer={currentOffer[0]}/>
+            <Map offers={offers} selectedOffer={offers[0]}/>
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <CitiesCardList offers={nearOffers} />
+              <CitiesCardList offers={offersNearby} />
             </div>
           </section>
         </div>
