@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AppRoute, AuthStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
+import { toast } from 'react-toastify';
 
 function LoginScreen(): JSX.Element {
   const emailRef = useRef<HTMLInputElement | null>(null);
@@ -17,6 +18,15 @@ function LoginScreen(): JSX.Element {
     evt.preventDefault();
 
     if (emailRef.current !== null && passwordRef.current !== null) {
+      if (!/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(emailRef.current.value)) {
+        toast.warn('Login is not valid');
+        return;
+      }
+      if (!/(?=.*\d)(?=.*[a-zA-Z])/.test(passwordRef.current.value)) {
+        toast.warn('Password is not valid');
+        return;
+      }
+
       dispatch(loginAction({
         email: emailRef.current.value,
         password: passwordRef.current.value,
