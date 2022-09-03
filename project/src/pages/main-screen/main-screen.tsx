@@ -27,11 +27,11 @@ function MainScreen(): JSX.Element {
   const offersToRender = useMemo(() => {
     switch (sort) {
       case SortType.Rated:
-        return filteredOffers.sort((a, b) => b.rating - a.rating);
+        return filteredOffers.map((item) => item).sort((a, b) => b.rating - a.rating);
       case SortType.PriceHighToLow:
-        return filteredOffers.sort((a, b) => b.price - a.price);
+        return filteredOffers.map((item) => item).sort((a, b) => b.price - a.price);
       case SortType.PriceLowToHigh:
-        return filteredOffers.sort((a, b) => a.price - b.price);
+        return filteredOffers.map((item) => item).sort((a, b) => a.price - b.price);
       default:
         return filteredOffers;
     }

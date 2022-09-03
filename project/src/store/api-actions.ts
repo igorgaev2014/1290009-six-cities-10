@@ -30,11 +30,14 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
   'data/fetchOffers',
   async (_arg, {dispatch, extra: api}) => {
     dispatch(setOffersLoadingStatus(true));
-
-    const response = await api.get<Offers>(APIRoute.Offers);
-    const {data} = response;
-    dispatch(loadOffers(data));
-    dispatch(setOffersLoadingStatus(false));
+    try {
+      const response = await api.get<Offers>(APIRoute.Offers);
+      const {data} = response;
+      dispatch(loadOffers(data));
+      dispatch(setOffersLoadingStatus(false));
+    } catch {
+      dispatch(redirectToRoute(AppRoute.Error404));
+    }
   },
 );
 

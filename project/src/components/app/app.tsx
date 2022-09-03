@@ -9,13 +9,18 @@ import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
 import { useAppSelector } from '../../hooks';
 import LoadingLayout from '../loading-layout/loading-layout';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../browser-history';
+import { AuthStatus } from '../../const';
+
+const isCheckedAuth = (authStatus: AuthStatus): boolean =>
+  authStatus === AuthStatus.Unknown;
 
 function App(): JSX.Element {
   const isOffersDataLoading = useAppSelector((state) => state.isOffersLoading);
+  const authStatus = useAppSelector((state) => state.authStatus);
 
-  if (isOffersDataLoading) {
+  if (isCheckedAuth(authStatus) && isOffersDataLoading) {
     return (
       <LoadingLayout />
     );
