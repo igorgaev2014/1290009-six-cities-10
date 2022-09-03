@@ -19,6 +19,10 @@ function RoomScreen(): JSX.Element {
   const id = Number(params.id);
   const {offers, offersNearby, offer, isOfferLoading, authStatus} = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
+  let offersNearbyMap = offersNearby;
+  if (offers[0] !== undefined) {
+    offersNearbyMap = [...offersNearby, offers[0]];
+  }
 
   useEffect(() => {
     dispatch(setOfferAction(id));
@@ -136,7 +140,7 @@ function RoomScreen(): JSX.Element {
             </div>
           </div>
           <section className="property__map map">
-            <Map offers={offers} selectedOffer={offers[0]}/>
+            <Map offers={offersNearbyMap} selectedOffer={offers[0]}/>
           </section>
         </section>
         <div className="container">
