@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/igorgaev2014/1290009-six-cities-10/static/css/main.8527c927.css",
+    "main.js": "/igorgaev2014/1290009-six-cities-10/static/js/main.dc0753d7.js",
+    "index.html": "/igorgaev2014/1290009-six-cities-10/index.html",
+    "main.8527c927.css.map": "/igorgaev2014/1290009-six-cities-10/static/css/main.8527c927.css.map",
+    "main.dc0753d7.js.map": "/igorgaev2014/1290009-six-cities-10/static/js/main.dc0753d7.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8527c927.css",
+    "static/js/main.dc0753d7.js"
+  ]
+}
